@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.util.log
+import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.android.material.textfield.TextInputLayout
 
 //import android.widget.Toast
 
@@ -15,10 +17,16 @@ class MainActivity : AppCompatActivity() {
     private val emailLiveData = MutableLiveData<String>()
     private val passwordLiveData = MutableLiveData<String>()
     private val isValidLiveData = MediatorLiveData<Boolean>().apply {
+        this.value = false
+
         addSource(emailLiveData){ email ->
             val password = passwordLiveData.value
-            this.value = validateForm(email,)
+            this.value = validateForm(email, password)
+        }
 
+        addSource(passwordLiveData) { password ->
+            val email = emailLiveData.value
+            this.value = validateForm(email, password)
         }
     }
 
@@ -27,20 +35,37 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val emailLayout = findViewById<TextInputLayout>(R.id.email_layout)
+        val passwordLayout = findViewById<TextInputLayout>(R.id.pasword_layout)
+        val signInButton = findViewById<MaterialButton>(R.id.sign_in_button)
+
+        emailLayout.editText?.doOnTextChanged { text, _, _, _ ->
+            emailLiveData.value = text?.toString()
+        }
+
+        passwordLayout.editText?.doOnTextChanged { text, _, _, _ ->
+            passwordLiveData.value = text?.toString()
+        }
+
+        isValidLiveData.observe(this){ isValid ->
+            signInButton.isEnabled = isValid
+        }
     }
 
-        private fun validateForm(email: String?, password:String?): Boolean {
-            return false
+        private fun validateForm(email: String?, password: String?): Boolean {
+            val isValidEmail = email != null && email.isNotBlank() && email.contains("@")
+            val isValidPassword = password != null && password.isNotBlank() && password.length>=6
+            return isValidEmail && isValidPassword
         }
 
 
-        val button3 = findViewById<Button>(R.id.button)
-        button3.setOnClickListener{
-            val intent = Intent(this, GetPassword::class.java)
-            startActivity(intent)
+       // val button3 = findViewById<Button>(R.id.button)
+       // button3.setOnClickListener{
+          //  val intent = Intent(this, GetPassword::class.java)
+        //    startActivity(intent)
 
 
-        }
+       // }
 
         //fun isValidString(str: String): Boolean{
            // return android.util.Patterns.EMAIL_ADDRESS.matcher(str).matches()
@@ -54,7 +79,7 @@ class MainActivity : AppCompatActivity() {
          //   emails.forEach {
            //     Log.d("MainActivity","is valid email $it => ${isValidString(it)}")
             }
-        }
+        //}
 
         //class MainActivity : AppCompatActivity() {
           //  val EMAIL_ADDRESS_PATTERN = Pattern.compile(
