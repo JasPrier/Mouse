@@ -11,7 +11,7 @@ class GetPassword : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.get_password)
 
-        val button3 = findViewById<Button>(R.id.button)
+        val button3 = findViewById<Button>(R.id.button2)
         button3.setOnClickListener{
             val intent = Intent(this, GetPassword::class.java)
             startActivity(intent)
