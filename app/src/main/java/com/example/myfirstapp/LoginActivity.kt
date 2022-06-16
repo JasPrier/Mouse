@@ -55,15 +55,17 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_login)
 
-        val emailLayout = findViewById<EditText>(R.id.edit_text_email)
+        //val emailLayout = findViewById<EditText>(R.id.edit_text_email)
         val passwordLayout = findViewById<EditText>(R.id.edit_text_password)
         val signInButton = findViewById<Button>(R.id.button_sign_in)
 
+        /*
         emailLayout.doOnTextChanged { text, _, _, _ ->
             emailLiveData.value = text?.toString()
         }
+        */
 
         passwordLayout.doOnTextChanged { text, _, _, _ ->
             passwordLiveData.value = text?.toString()
@@ -86,11 +88,11 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-        private fun validateForm(email: String?, password: String?): Boolean {
-            val isValidEmail = email != null && email.isNotBlank() && email.contains("@")
-            val isValidPassword = password != null && password.isNotBlank() && password.length>=6
-            return isValidEmail && isValidPassword
-        }
+    private fun validateForm(email: String?, password: String?): Boolean {
+        val isValidEmail = email != null && email.isNotBlank() && email.contains("@")
+        val isValidPassword = password != null && password.isNotBlank() && password.length>=6
+        return isValidEmail && isValidPassword
+    }
 
 }
 

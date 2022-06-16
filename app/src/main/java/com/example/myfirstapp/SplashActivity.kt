@@ -1,62 +1,36 @@
 package com.example.myfirstapp
 import android.os.Bundle
 import android.content.Context
-import android.content.SharedPreferences
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
 
 
 class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        //this is the shared preferences
-        //var sharedPreferences = getSharedPreferences("SP_INFO", Context.MODE_PRIVATE)
-
+        setContentView(R.layout.activity_splash)
         loadData()
+    }
 
-        //Button Click
-        button_sign_in.setOnClickerListener{
-            saveData()
+    private fun loadData() {
+        val sharedPreferences = getSharedPreferences(Constants.SHARED_PREFS_KEY, Context.MODE_PRIVATE)
+        val savedPassword: String? = sharedPreferences.getString(Constants.PASSWORD_KEY, null)
 
-
+        if (savedPassword.isNullOrEmpty() || savedPassword != Constants.validPassword) {
+            //user is not logged in
+            //go to LoginActivity2
+            val intent = Intent(this, LoginActivity2::class.java) //"this" keyword always refers to the current class
+            startActivity(intent)
+        } else {
+            //user IS logged in
+            //go to MainActivity
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         }
+
+        finish()
     }
-
-
-    private fun saveData(){
-
-
-        val insertedText :String = edit_text_email.text.toString()
-        edit_text_password.text = insertedText
-
-
-        var sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
-        var editor = sharedPreferences.edit()
-        editor.apply{
-            putString("STRING_KEY", insertedText)
-            putBoolean("BOOLEAN_KEY", sw_switch)
-        }apply()
-
-        Toast.makeText(this,"Data saved", Toast.LENGTH_SHORT).show()
-    }
-
-    private fun loadData(){
-        var sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
-        var savedString : String? = sharedPreferences.getString("STRING_KEY", null)
-        var savedBoolean: Boolean = sharedPreferences.getBoolean("BOOLEAN_KEY", false)
-
-        edit_text_password.text = savedString
-        sw_switch.isChecked = savedBoolean
-
-    }
-
-
-    //sharedPref = MainActivity?.getPreferences(Context.MODE_PRIVATE) ?: return
-    //val defaultValue = resources.getInteger(R.integer.saved_high_score_default_key)
-    //val highScore = sharedPref.getInt(getString(R.string.saved_high_score_key), defaultValue)
 
     /*
 
@@ -65,8 +39,9 @@ class SplashActivity : AppCompatActivity() {
     1 - Define SplashActivity in manifest
     2 - Make SplashActivity default/launch activity
     3 - Inside SplashActivity check if user is already authenticated/logged in
-    */
-
+        a - If user IS logged in, go to MainActivity
+        b - If user IS NOT logged in, go to LoginActivity
+     */
 
     /*val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
      with (sharedPref.edit()) {
@@ -76,9 +51,5 @@ class SplashActivity : AppCompatActivity() {
     */
 
 
-    /*
 
-        a - If user IS logged in, go to MainActivity
-        b - If user IS NOT logged in, go to LoginActivity
-     */
 }
