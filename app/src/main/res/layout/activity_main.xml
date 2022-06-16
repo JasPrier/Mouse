@@ -92,7 +92,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 tools:layout_editor_absoluteY="788dp" />
 
+            <Switch
+                android:id="@+id/sw_switch1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Switch"
+                tools:layout_editor_absoluteX="148dp"
+                tools:layout_editor_absoluteY="537dp" />
+
+
         </LinearLayout>
+
+
 
         <!--
         <GridView
