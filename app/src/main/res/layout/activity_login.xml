@@ -72,6 +72,7 @@
                 android:ems="10"
                 android:inputType="textPassword"
                 android:hint="Password"
+                app:passwordToggleEnabled="true"
                 tools:layout_editor_absoluteX="100dp"
                 tools:layout_editor_absoluteY="455dp" />
 
@@ -90,6 +91,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Get Password"
+                android:enabled="@{signInEnabled}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:layout_editor_absoluteY="788dp" />
@@ -100,7 +102,14 @@
                 android:layout_height="wrap_content"
                 android:text="Switch"
                 tools:layout_editor_absoluteX="148dp"
-                tools:layout_editor_absoluteY="537dp" />
+                tools:layout_editor_absoluteY="537dp"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+            <CheckBox
+                android:id="@+id/checkBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Show Password" />
 
 
         </LinearLayout>

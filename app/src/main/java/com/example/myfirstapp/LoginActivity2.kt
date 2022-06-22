@@ -1,10 +1,17 @@
 package com.example.myfirstapp
 
+import android.R
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.InputType
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
+import android.view.View
+import android.widget.CheckBox
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import com.example.myfirstapp.databinding.ActivityLoginBinding
@@ -12,10 +19,15 @@ import com.example.myfirstapp.databinding.ActivityLoginBinding
 
 class LoginActivity2 : AppCompatActivity() {
 
+
     //val = immutable. cannot be changed after initialization
     //lazy = initialized on first call
     private val binding: ActivityLoginBinding by lazy {
         DataBindingUtil.setContentView(this@LoginActivity2, R.layout.activity_login)
+    }
+
+    private val binding2: ActivityLoginBinding by lazy {
+        DataBindingUtil.setContentView(this@LoginActivity2, R.layout.get_password)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,8 +48,32 @@ class LoginActivity2 : AppCompatActivity() {
          * Tasks for Jasmine
          *
          * 1) set onClickListener for "Get Password Button"
-         *      a) Inside onClickListener, launch GetPassword Activity
-         *      b) be sure to watch out for ???? when navigating between login and getPassword activities
+         */
+        // I am calling the button
+        binding.buttonGetPassword.setOnClickListener{
+            //this is where i wil launch the GetPassword Activity
+            //Once the button is clicked then, it will launch the GetPassword Activity Page
+            val intent = Intent(this, GetPassword::class.java)
+            startActivity(intent)
+            finish()
+
+            /**
+             *      a) Inside onClickListener, launch GetPassword Activity
+             *      b) be sure to watch out for ???? when navigating between login and getPassword activities
+             */
+
+        }
+
+       // binding.button4.setOnClickListener{
+
+       // }
+
+
+
+
+
+
+        /**
          * 3) Inside GetPassword Activity (in the code)
          *      a) use DataBindingUtil instead of normal setContentView()
          *      b) set onClickListeners for buttons in view
@@ -45,7 +81,55 @@ class LoginActivity2 : AppCompatActivity() {
          *      d) Stretch Goal:
          *          i) Create "Copy" button that copies password to user's clipboard
          */
+
+
+        //If the checkbox is clicked then the textbox will show the password
+
+        binding.checkBox{
+
+        }
+                checkBox.setOnClickerListener(
+
+                )
+                if (checkBox.isChecked) {
+                    p
+                    editTextTextPassword.inputType = 1
+                    )
+                    else
+
+                        editTextTextPassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+
+
+
+
+
+                    checkBox.isChecked = false
+                }
+
+            }
+        }
+
+
+        //This is To Copy and Paste
+      //  if ClipData.Item is text
+
+
+
+
+        //This was going to be used for a buttton to show and hide the program
+        /**
+        /showHideBtn.setOnClickListener {//
+            if(showHideBtn.text.toString().equals("Show")){
+                pwd.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                showHideBtn.text = "Hide"
+            } else{
+                pwd.transformationMethod = PasswordTransformationMethod.getInstance()
+                showHideBtn.text = "Show"
+            }
+        }
+
     }
+        */
 
     private fun validateLoginFields(password: String? = binding.editTextPassword.text?.toString()) {
         val isValidPassword = password != null && password.isNotBlank() && password.length >= 2
